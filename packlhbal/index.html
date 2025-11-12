@@ -783,7 +783,81 @@ input[name="email"] {
       visibility: visible;
       transform: translateY(0);
     }
+/* Conteneur du prix avec fond et border animée */
+.price {
+    margin-top: 15px;
+    font-size: 1.4em;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+
+    padding: 10px 20px;
+    border: 3px solid #e60000;
+    border-radius: 15px;
+
+    /* Fond dégradé animé */
+    background: linear-gradient(270deg, #ffe5e5, #ffcccc, #ff9999, #ffe5e5);
+    background-size: 600% 600%;
+    animation: gradientBG 5s ease infinite;
+
+    /* Bordure animée */
+    box-shadow: 0 0 15px rgba(230,0,0,0.5);
+    animation: borderPulse 1.5s infinite alternate;
+}
+
+/* Prix barré */
+.old-price {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 1.1em;
+    opacity: 0.8;
+}
+
+/* Nouveau prix clignotant */
+.new-price {
+    color: #e60000;
+    font-size: 1.6em;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.6);
+    animation: blink 1s infinite alternate;
+}
+
+/* Animation du clignotement */
+@keyframes blink {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Animation du fond dégradé */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animation de la bordure (pulse) */
+@keyframes borderPulse {
+    0% { box-shadow: 0 0 15px rgba(230,0,0,0.5); }
+    50% { box-shadow: 0 0 25px rgba(230,0,0,0.8); }
+    100% { box-shadow: 0 0 15px rgba(230,0,0,0.5); }
+}
+
     @media (max-width: 768px) {
+          .price {
+        font-size: 1.2em; /* réduit légèrement la taille globale */
+        padding: 8px 15px; /* ajuste le padding pour que ça reste harmonieux */
+    }
+
+    .old-price {
+        font-size: 1em; /* réduit le prix barré */
+    }
+
+    .new-price {
+        font-size: 1.3em; /* réduit légèrement le prix promo */
+    }
         .titredepackfr, .titredepackar {
         font-size: 32px;
        }
@@ -1007,6 +1081,10 @@ input[name="email"] {
             </div>
             <button type="submit">Confirmer la Commande</button>
           </form>
+          <div class="price">
+             <span class="old-price">429DH</span>
+             <span class="new-price">379DH</span>
+        </div>
         </div>
       </div>
     </section>
@@ -1051,6 +1129,10 @@ input[name="email"] {
             </div>
             <button type="submit">تأكيد الطلب</button>
           </form>
+            <div class="price">
+             <span class="old-price">429MAD</span>
+             <span class="new-price">379MAD</span>
+           </div>
         </div>
       </div>
     </section>
@@ -1242,6 +1324,10 @@ input[name="email"] {
             </div>
             <button type="submit">Confirmer la Commande</button>
           </form>
+            <div class="price">
+               <span class="old-price">429DH</span>
+               <span class="new-price">379DH</span>
+            </div>
         </div>
       </div>
 </section>
@@ -1288,6 +1374,10 @@ input[name="email"] {
             </div>
             <button type="submit">تأكيد الطلب</button>
           </form>
+            <div class="price">
+               <span class="old-price">429MAD</span>
+               <span class="new-price">379MAD</span>
+           </div>
         </div>
       </div>
     </section>
@@ -1316,6 +1406,10 @@ input[name="email"] {
             </div>
       <button type="submit">Commander maintenant!</button>
     </form>
+        <div class="price">
+             <span class="old-price">429DH</span>
+             <span class="new-price">379DH</span>
+        </div>
   </div>
 </div>
 <button id="commanderBtn2" title="Commander2">اطلب الآن 🛒</button>
@@ -1339,6 +1433,10 @@ input[name="email"] {
                  </span>
             </div>
       <button type="submit">!تأكيد الطلب</button>
+             <div class="price">
+               <span class="old-price">429MAD</span>
+               <span class="new-price">379MAD</span>
+            </div>
     </form>
   </div>
 </div>
