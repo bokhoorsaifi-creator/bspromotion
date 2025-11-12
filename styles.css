@@ -1,0 +1,463 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main Header Styles */
+.main-header {
+    width: 100%;
+    background-color: #a87d32;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo-img {
+    height: 50px;
+    border-radius: 100px;
+}
+.prioritere{
+        margin: 0 0 0 50%
+}
+/* Navigation Menu (Hamburger) */
+.nav-list {
+    list-style-type: none;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 100px;
+    right: 0;
+    left: 0;
+    background-color: blanchedalmond;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-height: 0; /* Initial state: collapsed */
+    overflow: hidden;
+    opacity: 0; /* Make the menu invisible */
+    transform: translateY(-20px); /* Slide it upwards */
+    transition: max-height 0.5s ease, opacity 0.3s ease, transform 0.3s ease; /* Smooth transitions for opening */
+    z-index: 1; /* Lower z-index so hamburger can stay on top */
+}
+
+.nav-list.active {
+    max-height: 300px;  /* Expanded size */
+    opacity: 1;  /* Make the menu visible */
+    transform: translateY(0); /* Slide it into place */
+    background-color: blanchedalmond;
+    display: block;
+}
+
+/* Hamburger Styles */
+.hamburger {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    z-index: 10; /* Ensure hamburger is always above nav-list */
+}
+
+.hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: rgb(43, 29, 29);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hamburger Animation: Transform into X */
+.hamburger.open .bar-1 {
+    transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger.open .bar-2 {
+    opacity: 0;
+}
+
+.hamburger.open .bar-3 {
+    transform: rotate(-45deg) translateY(-8px);
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #a87d32;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center; /* Centers the footer content */
+}
+
+.footer-logo img {
+    height: 40px;
+    border-radius: 100px;
+}
+
+.footer-nav-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+}
+
+.footer-nav-list li {
+    margin-left: 20px;
+}
+
+.footer-nav-list a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: font-size 0.3s ease;
+}
+
+/* General Page Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*height: 100vh;*/
+    text-align: center;
+    flex-direction: column;
+}
+
+/* Main Content Section */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* Section Styles (Nos Packs & Contactez-Nous) */
+section {
+    margin-bottom: 30px; /* Spacing between sections */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    /*max-width: 600px;*/
+}
+
+/* Styling for each section heading */
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Styling for paragraph text in each section */
+section p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Logo Centering */
+footer .footer-logo, header .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+footer .footer-logo img, header .logo img {
+    width: 50px; /* Adjust the logo size */
+    height: auto;
+    border-radius: 50%;
+}
+footer, header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;  /* ajuste la hauteur si nécessaire */
+}
+
+footer .footer-logo, header .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;  /* enlève la marge si elle n'est pas nécessaire */
+}
+/* --- RESET ET BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f7f6;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- HEADER --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #f5e6ca, #e6ccb2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-img {
+    width: 120px;
+}
+
+.nav-list {
+    list-style: none;
+    display: block;
+    gap: 25px;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: #4a3f35;
+    font-weight: 600;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.nav-list a:hover {
+    color: #b27b50; /* couleur dorée élégante */
+    transform: scale(1.08);
+}
+
+/* --- HAMBURGER --- */
+.hamburger {
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: #4a3f35;
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* --- SECTION PACKS --- */
+.packs-section {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #fffaf6;
+}
+
+.packs-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2em;
+    color: #4a3f35;
+    margin-bottom: 15px;
+}
+
+.packs-section p {
+    color: #6b5e4f;
+    margin-bottom: 40px;
+}
+
+.packs-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.pack-card {
+    background: linear-gradient(135deg, #d9b08c, #f5d7b0);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 15px;
+    padding: 25px;
+    width: 280px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.pack-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #e6b980, #f2d3ab);
+}
+
+.pack-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.pack-card p {
+    font-size: 0.95em;
+    opacity: 0.9;
+}
+
+/* --- CONTACT --- */
+.contact-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #f9f7f6;
+}
+
+.contact-section h2 {
+    color: #4a3f35;
+    margin-bottom: 10px;
+}
+
+.contact-section a {
+    color: #b27b50;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-section a:hover {
+    color: #a46a3f;
+}
+
+/* --- FOOTER --- */
+.footer {
+    background-color: #4a3f35;
+    color: #f9f7f6;
+    text-align: center;
+    padding: 20px;
+}
+
+.footer-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.footer-nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.footer-nav-list a {
+    color: #f9f7f6;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-nav-list a:hover {
+    color: #d9b08c;
+}
+/* --- DROPDOWN MENU --- */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: blanchedalmond;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    min-width: 180px;
+    z-index: 1000;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: blanchedalmond;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    min-width: 180px;
+    z-index: 1000;
+}
+
+.dropdown-content.show {
+    display: block;
+    position: static;
+}
+
+.dropdown-content li {
+    list-style: none;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    color: #4a3f35;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.dropdown-content a:hover {
+    background-color: #f2d3ab;
+}
+
+/* Afficher le menu quand on survole */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        background-color: #fffaf6;
+        position: absolute;
+        top: 70px;
+        right: 30px;
+        width: 200px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 15px 0;
+    }
+
+    .nav-list.active {
+        display: block;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav-list {
+        display: block; /* Keep it in the DOM for smooth transition */
+    }
+
+    .hamburger {
+        display: flex;
+        position: relative;
+    }
+
+    .footer-nav-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .footer-nav-list a {
+        font-size: 14px;
+    }
+}
+
+/* Styles pour les grandes tailles d'écran */
+@media (min-width: 769px) {
+    .footer-nav-list a {
+        font-size: 16px;
+    }
+}
