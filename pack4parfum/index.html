@@ -54,6 +54,7 @@
     align-items: center;
     justify-content: center;
     z-index: 999999;
+    overflow: scroll;
     transition: opacity 0.6s ease;
   }
 
@@ -386,9 +387,23 @@ button {
   background: rgba(0, 0, 0, 0.5);  /* Fond noir avec opacité 0.5 */
   display: none;
   justify-content: center;
-  align-items: center;
-  z-index: 2000;  /* Assurez-vous qu'il est devant tout le reste */
+  align-items: flex-start;   /* Le contenu commence en haut */
+  padding: 20px;             /* Un peu d’espace autour du formulaire */
+  overflow-y: auto;          /* Scroll vertical si le formulaire dépasse */
+  z-index: 2000;             /* Devant tout le reste */
 }
+
+/* Popup form */
+#popupForm, #popupForm2 {
+  background: #fff;
+  max-width: 500px;          /* Largeur max du formulaire */
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin: 40px 0;            /* Marge pour que le scroll fonctionne bien */
+}
+
 
 /* Popup form */
 #popupForm, #popupForm2 {
@@ -396,7 +411,7 @@ button {
   padding: 30px 20px;
   border-radius: 10px;
   width: 90%;
-  max-width: 400px;  /* Ajustez la largeur du formulaire */
+  max-width: 500px;  /* Ajustez la largeur du formulaire */
   position: relative;
   box-shadow: 0 0 20px rgb(73, 1, 1);
   display: flex;
@@ -499,6 +514,34 @@ body[dir="ltr"] {
     font-size: 30px;
     font-weight: 900;
 }
+/* Loader container */
+.form-loader {
+  display: none;
+  padding: 15px 25px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: rgba(255, 230, 150, 0.6);
+}
+
+/* Clignotement actif */
+.form-loader.loading {
+  animation: blinkBg 1s infinite;
+}
+
+/* Animation clignotante */
+@keyframes blinkBg {
+  0% {
+    background-color: rgba(255, 230, 150, 0.4);
+  }
+  50% {
+    background-color: rgba(255, 180, 80, 0.9);
+  }
+  100% {
+    background-color: rgba(255, 230, 150, 0.4);
+  }
+}
+
+/* Spinner (ton CSS existant conservé) */
 .emoji-spinner {
   display: inline-block;
   animation: spin 1s linear infinite;
@@ -509,6 +552,7 @@ body[dir="ltr"] {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
   
 /* ========== SECTION PRINCIPALE ========== */
 section.container {
@@ -703,6 +747,33 @@ section.container.reverse {
     html[lang="ar"] #commanderBtn2 {
       display: block;
     }
+  .parfum-list {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.parfum-list li {
+    padding: 6px 10px;
+    background: #f1f1f1;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.parfum-list li span {
+    font-weight: bold;
+}
+
+.remove-parfum {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
+
 /* ========== RESPONSIVE DESIGN ========== */
 
 @media (max-width: 992px) {
@@ -751,6 +822,17 @@ section.container.reverse {
 input[name="email"] {
   display: none;
 }
+/* Par défaut on cache le titre */
+.titredepagear {
+  display: none;
+}
+
+/* Affiche seulement si la page est en arabe */
+html[lang="ar"] .titredepagear {
+  display: block;
+  background-color: #514131;
+}
+
     /* ===== Style du bouton ===== */
     #scrollTopBtn {
       position: fixed;
@@ -789,7 +871,8 @@ input[name="email"] {
 /* Conteneur du prix avec fond et border animée */
 .price {
     margin-top: 15px;
-    font-size: 1.4em;
+    margin-bottom: 15px;
+    font-size: 1em;
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -850,7 +933,7 @@ input[name="email"] {
 
     @media (max-width: 768px) {
           .price {
-        font-size: 1.2em; /* réduit légèrement la taille globale */
+        font-size: 1em; /* réduit légèrement la taille globale */
         padding: 8px 15px; /* ajuste le padding pour que ça reste harmonieux */
     }
 
@@ -911,6 +994,9 @@ input[name="email"] {
     .review-text {
         font-size: 11px;
     }
+    .price-total{
+      font-size: 0.8em;
+    }
 }
       @media (max-width: 480px) {
       .titredepackfr,.titredepackar {
@@ -930,6 +1016,9 @@ input[name="email"] {
     .titredepackar, .titredepackfr {
     font-size: 26px;
     }
+    .price-total{
+      font-size: 0.6em;
+    }
     }
       @media (max-width: 475px) {
       #commanderBtn, #commanderBtn2 {
@@ -937,8 +1026,21 @@ input[name="email"] {
        width: 100%;
        display: block;
         }
+          .price-total{
+      font-size: 0.6em;
     }
-          @media (max-width: 325px) {
+    }
+   @media (max-width: 400px) {
+        .price-total{
+      font-size: 0.55em;
+    }
+  }
+     @media (max-width: 375px) {
+        .price-total{
+      font-size: 0.5em;
+    }
+  }
+    @media (max-width: 325px) {
       #commanderBtn, #commanderBtn2 {
        right: 0; /* Espacé à gauche du scroll top */
        width: 100%;
@@ -958,6 +1060,11 @@ input[name="email"] {
         font-size: 12px;
     }
 }
+     @media (max-width: 310px) {
+        .price-total{
+      font-size: 0.45em;
+    }
+  }
 </style>
 
   <!-- Google Analytics -->
@@ -1040,101 +1147,204 @@ input[name="email"] {
 </head>
 <body>
       <div id="google_translate_element"></div>
-               <div class="titredepage" style="background-color: #514131;"> <h2 class="titredepackfr" id="packTitle" translate="no">💎 !!!PACk DYAL LHBAL!!! 💎</h2></div>
-               <div class="titredepage" style="background-color: #514131;"> <h2 class="titredepackar" id="packTitle" translate="no">💎 !!!الباك ديال الهبال!!! 💎</h2></div>
+               <div class="titredepagefr" style="background-color: #514131;"> <h2 class="titredepackfr" id="packTitle" translate="no">💎 !!!PACk DYAL LHBAL!!! 💎</h2></div>
+               <div class="titredepagear" style="background-color: #514131;"> <h2 class="titredepackar" id="packTitle" translate="no">💎 !!!الباك ديال الهبال!!! 💎</h2></div>
 <!-- Conteneur 1 formulaire 1 et 2 -->
     <section class="form-section descriptionn-fr" id="commande_form1" dir="ltr" lang="fr">
       <div class="form-wrapper">
         <div class="form-image">
-          <img id="mainImage_form1" src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" alt="Produit Principal">
+          <img id="mainImage_form1" src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" alt="Produit Principal">
           <div class="thumbnail-gallery-wrapper">
             <button class="thumb-scroll left" onclick="scrollThumbnails(-1, 'form1')">◀</button>
 
             <div class="gallery-thumbnails" id="thumbnails_form1">
-              <img src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" class="active" onclick="changeImage(this, 'form')">
-              <img src="photo/Eau_de_Parfum_Royal_Men_by_Al_Rehab_50ml_homme.jpg" onclick="changeImage(this, 'form1')">
-              <img src="photo/Eau_de_Parfum_RAYAN_BLACK_by_Al_Rehab_50ml_homme.webp" onclick="changeImage(this, 'form1')">
-              <img src="photo/Eau_de_Parfum_Alrehab_Elixir_by_Al_Rehab_35ml_mixte.webp" onclick="changeImage(this, 'form1')">
-              <img src="photo/Eau_de_Parfum_Glowing_Night_by_Al_Rehab_50ml_femme.webp" onclick="changeImage(this, 'form1')">
-              <img src="photo/Eau_de_Parfum_Zahrat_Hawaii_by_Al_Rehab_35ml_femme.jpg" onclick="changeImage(this, 'form1')">
-              <img src="photo/Eau_de_Parfum_Golden_Dreams_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form1')">
-              <img src="photo/Eau_de_Parfum_Imperial_Oud_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form1')">
-              <img src="photo/Eau_de_Parfum_VANILLA_COFFEE_by_Al_Rehab_35ml_mixte.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" class="active" onclick="changeImage(this, 'form1')">
+              <img src="photo/ROYALMEN by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/RAYANBLACK by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/ALREHAB ELIXIR by ALREHAB FEMMME 35ML CP.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/GLOWING NIGHT by ALREHAB FEMME 50ML CP.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/ZAHRAT HAWAII by ALREHAB FEMME 35ML CP.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/GOLDEN DREAMS by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/IMPERIAL OUD by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form1')">
+              <img src="photo/VANILLA COFFEE by ALREHAB MIXTE 35ML CP.jpg" onclick="changeImage(this, 'form1')">
             </div>
 
             <button class="thumb-scroll right" onclick="scrollThumbnails(1, 'form1')">▶</button>
           </div>
         </div>
-        <div class="form-content">
-          <h2 class="titredeforme">Commandez Maintenant</h2>
-          <form id="orderForm_form1">
-            <input type="text" name="prenom" placeholder="Prénom" required maxlength="50" autocomplete="given-name" />
-            <input type="text" name="nom" placeholder="Nom de famille" required maxlength="50" autocomplete="family-name" />
-            <input type="text" name="adresse" placeholder="Adresse complète" required maxlength="100" autocomplete="off" />
-            <input type="email" name="email" placeholder="Email" disabled />
-            <input type="tel" name="telephone" placeholder="Numéro de téléphone" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
-            <input type="number" name="quantite" placeholder="Quantité (ex : 1)" min="1" required />
-            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
-		    <div class="form-loader" style="display: none; color: noir; margin: 10px 0; text-align: center; font-weight: bold;">
-		        <span class="spinner-text">
-                     Traitement en cours <span class="emoji-spinner">⏳</span>...
-                </span>
-            </div>
-            <button type="submit">Confirmer la Commande</button>
-          </form>
-          <div class="price">
-             <span class="old-price">199DH</span>
-             <span class="new-price">139DH</span>
-        </div>
-        </div>
+<div class="form-content">
+  <h2 class="titredeforme">Commandez Maintenant</h2>
+  <form id="orderForm_form1" style="user-select: none;">
+    <input type="text" name="prenom" placeholder="Prénom" required maxlength="50" autocomplete="given-name" />
+    <input type="text" name="nom" placeholder="Nom de famille" required maxlength="50" autocomplete="family-name" />
+    <input type="text" name="adresse" placeholder="Adresse complète" required maxlength="100" autocomplete="off" />
+    <input type="email" name="email" placeholder="Email" disabled />
+    <input type="tel" name="telephone" placeholder="Numéro de téléphone (ex : 06)" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
+    <input type="number" name="quantite" placeholder="Quantité (ex : 1)" min="1" required />
+    <!-- Choix du pack -->
+    <div class="pack-choice">
+      <label><strong>Choisissez un Pack :</strong></label>
+      <select name="pack" id="packChoice_form1">
+        <option value="Pack 1 (2 parfums) - 99DH" data-type="Pack 1 (2 parfums) - 99DH" translate="no">Pack 1 (2 parfums) - 99DH</option>
+        <option value="Pack 2 (4 parfums) - 139DH" data-type="Pack 2 (4 parfums) - 139DH" translate="no">Pack 2 (4 parfums) - 139DH</option>
+        <option value="Pack 3 (6 parfums) - 189DH" data-type="Pack 3 (6 parfums) - 189DH" translate="no">Pack 3 (6 parfums) - 189DH</option>
+        <option value="Pack 4 (8 parfums) - 239DH" data-type="Pack 4 (8 parfums) - 239DH" translate="no">Pack 4 (8 parfums) - 239DH</option>
+      </select>
+    </div>
+    <!-- INPUT DYNAMIQUE DE PARFUMS -->
+    <div id="parfumChoiceForm1" class="parfum-dynamic">
+      <!-- Les options vont se mettre à jour selon le pack sélectionné -->
+<label><strong>Choisissez vos 2 parfums :</strong></label><br>
+    <select name="parfum1" required>
+      <option value="" disabled selected>Choisissez le Parfum 1</option>
+      <option value="FOR MEN 50ml">FOR MEN 50ml</option>
+      <option value="Royal Men 50ml">Royal Men 50ml</option>
+      <option value="RAYAN BLACK 50ml">RAYAN BLACK 50ml</option>
+      <option value="ALREHAB ELIXIR 35ml">ALREHAB ELIXIR 35ml</option>
+      <option value="GLOWING Night 50ml">GLOWING Night 50ml</option>
+      <option value="Zahrat Hawaii 35ml">Zahrat Hawaii 35ml</option>
+      <option value="GOLDEN DREAMS 50ml">GOLDEN DREAMS 50ml</option>
+      <option value="Imperial Oud 50ml">Imperial Oud 50ml</option>
+      <option value="VANILLA COFFEE 35ml">Imperial Oud 50ml</option>
+    </select>
+  <select name="parfum2" required>
+      <option value="" disabled selected>Choisissez le Parfum 2</option>
+      <option value="FOR MEN 50ml">FOR MEN 50ml</option>
+      <option value="Royal Men 50ml">Royal Men 50ml</option>
+      <option value="RAYAN BLACK 50ml">RAYAN BLACK 50ml</option>
+      <option value="ALREHAB ELIXIR 35ml">ALREHAB ELIXIR 35ml</option>
+      <option value="GLOWING Night 50ml">GLOWING Night 50ml</option>
+      <option value="Zahrat Hawaii 35ml">Zahrat Hawaii 35ml</option>
+      <option value="GOLDEN DREAMS 50ml">GOLDEN DREAMS 50ml</option>
+      <option value="Imperial Oud 50ml">Imperial Oud 50ml</option>
+      <option value="VANILLA COFFEE 35ml">Imperial Oud 50ml</option>
+  </select>
+    </div>
+    <!-- Total -->
+    <div class="price price-total">
+      <strong>Total :</strong> 
+      <span class="new-price" id="totalPrice_form1">99DH</span>
+      <span class="old-price" id="oldPrice_form1">139DH</span>
+      <strong>(+livraison gratuite)</strong>
+    </div>
+    <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
+    <input type="text" name="honeypot" style="display:none;">
+    <div class="form-loader" style="display: none; color: noir; margin: 10px 0; text-align: center; font-weight: bold;">
+      <span class="spinner-text">
+        Traitement en cours <span class="emoji-spinner">⏳</span>...
+      </span>
+    </div>
+
+    <button type="submit">Confirmer la Commande</button>
+  </form>
+</div>
+
       </div>
     </section>
     <section class="form-section descriptionn-ar" id="commande_form2" dir="rtl" lang="ar">
       <div class="form-wrapper">
         <div class="form-image">
-          <img id="mainImage_form2" src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" alt="المنتج الرئيسي">
+          <img id="mainImage_form2" src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" alt="المنتج الرئيسي">
           <div class="thumbnail-gallery-wrapper">
             <button class="thumb-scroll left" onclick="scrollThumbnails(-1, 'form2')">◀</button>
 
             <div class="gallery-thumbnails" id="thumbnails_form2">
-              <img src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" class="active" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_Royal_Men_by_Al_Rehab_50ml_homme.jpg" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_RAYAN_BLACK_by_Al_Rehab_50ml_homme.webp" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_Alrehab_Elixir_by_Al_Rehab_35ml_mixte.webp" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_Glowing_Night_by_Al_Rehab_50ml_femme.webp" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_Zahrat_Hawaii_by_Al_Rehab_35ml_femme.jpg" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_Golden_Dreams_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_Imperial_Oud_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form2')">
-              <img src="photo/Eau_de_Parfum_VANILLA_COFFEE_by_Al_Rehab_35ml_mixte.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" class="active" onclick="changeImage(this, 'form2')">
+              <img src="photo/ROYALMEN by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/RAYANBLACK by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/ALREHAB ELIXIR by ALREHAB FEMMME 35ML CP.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/GLOWING NIGHT by ALREHAB FEMME 50ML CP.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/ZAHRAT HAWAII by ALREHAB FEMME 35ML CP.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/GOLDEN DREAMS by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/IMPERIAL OUD by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form2')">
+              <img src="photo/VANILLA COFFEE by ALREHAB MIXTE 35ML CP.jpg" onclick="changeImage(this, 'form2')">
             </div>
 
             <button class="thumb-scroll right" onclick="scrollThumbnails(1, 'form2')">▶</button>
           </div>
         </div>
-        <div class="form-content">
+        <div class="form-content" translate="no">
           <h2 class="titredeforme">اطلب الآن</h2>
-          <form id="orderForm_form2">
-            <input type="text" name="prenom" placeholder="الاسم الأول" required maxlength="50" autocomplete="given-name" />
+    <form id="orderForm_form2" dir="rtl" style="text-align: right;" style="user-select: none;">
+
+           <input type="text" name="prenom" placeholder="الاسم الشخصي" required maxlength="50" autocomplete="given-name" />
+  
             <input type="text" name="nom" placeholder="الاسم العائلي" required maxlength="50" autocomplete="family-name" />
+  
             <input type="text" name="adresse" placeholder="العنوان الكامل" required maxlength="100" autocomplete="off" />
-            <input type="email" name="email" placeholder="البريد الإلكتروني" disabled>
-            <input type="tel" name="telephone" placeholder="رقم الهاتف" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
-            <input type="number" name="quantite" placeholder="الكمية (مثلاً: 1)" min="1" required />
-            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
-		    <div class="form-loader" style="display: none; color: noir;  margin: 10px 0; text-align: center; font-weight: bold;">
-				 <span class="spinner-text">
-                          <span class="emoji-spinner">⏳</span> يرجى الانتظار...
-                 </span>
-            </div>
-            <button type="submit">تأكيد الطلب</button>
-          </form>
-          <div class="price">
-               <span class="old-price">199MAD</span>
-               <span class="new-price">139MAD</span>
-         </div>
+  
+            <input type="email" name="email" placeholder="البريد الإلكتروني" disabled />
+  
+            <input type="tel" name="telephone" placeholder="رقم الهاتف (مثال: 06)" required 
+                pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
+  
+            <input type="number" name="quantite" placeholder="الكمية (مثال: 1)" min="1" required />
+
+        <!-- اختيار الباقة -->
+        <div class="pack-choice">
+          <label><strong translate="no">اختر الباقة :</strong></label>
+            <select name="pack" id="packChoice_form2">
+                <option value="Pack 1 (2 parfums) - 99DH" data-type="Pack 1 (2 parfums) - 99DH" translate="no">الباقة 1 (عطران) - 99 درهم</option>
+                <option value="Pack 2 (4 parfums) - 139DH" data-type="Pack 2 (4 parfums) - 139DH" translate="no">الباقة 2 (4 عطور) - 139 درهم</option>
+                <option value="Pack 3 (6 parfums) - 189DH" data-type="Pack 3 (6 parfums) - 189DH" translate="no">الباقة 3 (6 عطور) - 189 درهم</option>
+                <option value="Pack 4 (8 parfums) - 239DH" data-type="Pack 4 (8 parfums) - 239DH" translate="no">الباقة 4 (8 عطور) - 239 درهم</option>
+          </select>
         </div>
+
+        <!-- اختيار العطور -->
+        <div id="parfumChoiceForm2" class="parfum-dynamic">
+        <label><strong>اختر العطرين :</strong></label><br>
+
+          <select name="parfum1" required>
+              <option value="" disabled selected>اختر العطر الأول</option>
+              <option value="FOR MEN 50ml">فور مين 50 مل</option>
+              <option value="Royal Men 50ml">رويال مين 50 مل</option>
+              <option value="RAYAN BLACK 50ml">ريان بلاك 50 مل</option>
+              <option value="ALREHAB ELIXIR 35ml">الأريـحـاب إليكسير 35 مل</option>
+              <option value="GLOWING Night 50ml">جلوينغ نايت 50 مل</option>
+              <option value="Zahrat Hawaii 35ml">زهرة هاواي 35 مل</option>
+              <option value="GOLDEN DREAMS 50ml">غولدن دريمز 50 مل</option>
+              <option value="Imperial Oud 50ml">إمبيريال عود 50 مل</option>
+              <option value="VANILLA COFFEE 35ml">"فانيلا كوفي 35 مل</option>
+          </select>
+
+          <select name="parfum2" required>
+              <option value="" disabled selected>اختر العطر الثاني</option>
+              <option value="FOR MEN 50ml">فور مين 50 مل</option>
+              <option value="Royal Men 50ml">رويال مين 50 مل</option>
+              <option value="RAYAN BLACK 50ml">ريان بلاك 50 مل</option>
+              <option value="ALREHAB ELIXIR 35ml">الأريـحـاب إليكسير 35 مل</option>
+              <option value="GLOWING Night 50ml">جلوينغ نايت 50 مل</option>
+              <option value="Zahrat Hawaii 35ml">زهرة هاواي 35 مل</option>
+              <option value="GOLDEN DREAMS 50ml">غولدن دريمز 50 مل</option>
+              <option value="Imperial Oud 50ml">إمبيريال عود 50 مل</option>
+              <option value="VANILLA COFFEE 35ml">"فانيلا كوفي 35 مل</option>
+        </select>
       </div>
-    </section>
+
+        <!-- السعر -->
+        <div class="price price-total">
+          <strong>السعر :</strong>
+            <span class="new-price" id="totalPrice_form2" translate="no">99 درهم</span>
+            <span class="old-price" id="oldPrice_form2" translate="no">139 درهم</span>
+          <strong translate="no">(+ التوصيل مجاني)</strong>
+        </div>
+
+        <!-- Honeypots -->
+            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
+            <input type="text" name="honeypot" style="display:none;" />
+
+        <!-- Loader -->
+        <div class="form-loader" style="display: none; color: black; margin: 10px 0; text-align: center; font-weight: bold;">
+        <span class="spinner-text" translate="no">جاري المعالجة <span class="emoji-spinner">⏳</span>...</span>
+        </div>
+
+        <button type="submit" translate="no">تأكيد الطلب</button>
+
+   </form>
+  </div>
+</div>
+</section>
 
       
 <!-- Conteneur 1 Parfums Féminins -->
@@ -1205,46 +1415,90 @@ input[name="email"] {
 <section class="form-section descriptionn-fr" id="commande_form3" dir="ltr" lang="fr">
       <div class="form-wrapper">
         <div class="form-image">
-          <img id="mainImage_form3" src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" alt="Produit Principal">
+          <img id="mainImage_form3" src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" alt="Produit Principal">
           <div class="thumbnail-gallery-wrapper">
             <button class="thumb-scroll left" onclick="scrollThumbnails(-1, 'form3')">◀</button>
 
             <div class="gallery-thumbnails" id="thumbnails_form3">
-              <img src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" class="active" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_Royal_Men_by_Al_Rehab_50ml_homme.jpg" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_RAYAN_BLACK_by_Al_Rehab_50ml_homme.webp" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_Alrehab_Elixir_by_Al_Rehab_35ml_mixte.webp" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_Glowing_Night_by_Al_Rehab_50ml_femme.webp" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_Zahrat_Hawaii_by_Al_Rehab_35ml_femme.jpg" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_Golden_Dreams_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_Imperial_Oud_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form3')">
-              <img src="photo/Eau_de_Parfum_VANILLA_COFFEE_by_Al_Rehab_35ml_mixte.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" class="active" onclick="changeImage(this, 'form3')">
+              <img src="photo/ROYALMEN by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/RAYANBLACK by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/ALREHAB ELIXIR by ALREHAB FEMMME 35ML CP.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/GLOWING NIGHT by ALREHAB FEMME 50ML CP.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/ZAHRAT HAWAII by ALREHAB FEMME 35ML CP.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/GOLDEN DREAMS by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/IMPERIAL OUD by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form3')">
+              <img src="photo/VANILLA COFFEE by ALREHAB MIXTE 35ML CP.jpg" onclick="changeImage(this, 'form3')">
             </div>
 
             <button class="thumb-scroll right" onclick="scrollThumbnails(1, 'form3')">▶</button>
           </div>
         </div>
-        <div class="form-content">
+        <div class="form-content" style="user-select: none;">
           <h2 class="titredeforme">Commandez Maintenant</h2>
           <form id="orderForm_form3">
             <input type="text" name="prenom" placeholder="Prénom" required maxlength="50" autocomplete="given-name" />
             <input type="text" name="nom" placeholder="Nom de famille" required maxlength="50" autocomplete="family-name" />
             <input type="text" name="adresse" placeholder="Adresse complète" required maxlength="100" autocomplete="off" />
             <input type="email" name="email" placeholder="Email" disabled />
-            <input type="tel" name="telephone" placeholder="Numéro de téléphone" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
+            <input type="tel" name="telephone" placeholder="Numéro de téléphone (ex : 06)" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
             <input type="number" name="quantite" placeholder="Quantité (ex : 1)" min="1" required />
-            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
-		    <div class="form-loader" style="display: none; color: noir; margin: 10px 0; text-align: center; font-weight: bold;">
-		        <span class="spinner-text">
-                     Traitement en cours <span class="emoji-spinner">⏳</span>...
-                </span>
+            <!-- Choix du pack -->
+            <div class="pack-choice">
+              <label><strong>Choisissez un Pack :</strong></label>
+              <select name="pack" id="packChoice_form3">
+                <option value="Pack 1 (2 parfums) - 99DH" data-type="Pack 1 (2 parfums) - 99DH" translate="no">Pack 1 (2 parfums) - 99DH</option>
+                <option value="Pack 2 (4 parfums) - 139DH" data-type="Pack 2 (4 parfums) - 139DH" translate="no">Pack 2 (4 parfums) - 139DH</option>
+                <option value="Pack 3 (6 parfums) - 189DH" data-type="Pack 3 (6 parfums) - 189DH" translate="no">Pack 3 (6 parfums) - 189DH</option>
+                <option value="Pack 4 (8 parfums) - 239DH" data-type="Pack 4 (8 parfums) - 239DH" translate="no">Pack 4 (8 parfums) - 239DH</option>
+              </select>
             </div>
+            <!-- INPUT DYNAMIQUE DE PARFUMS -->
+            <div id="parfumChoiceForm3" class="parfum-dynamic">
+              <!-- Les options vont se mettre à jour selon le pack sélectionné -->
+        <label><strong>Choisissez vos 2 parfums :</strong></label><br>
+            <select name="parfum1" required>
+              <option value="" disabled selected>Choisissez le Parfum 1</option>
+              <option value="FOR MEN 50ml">FOR MEN 50ml</option>
+              <option value="Royal Men 50ml">Royal Men 50ml</option>
+              <option value="RAYAN BLACK 50ml">RAYAN BLACK 50ml</option>
+              <option value="ALREHAB ELIXIR 35ml">ALREHAB ELIXIR 35ml</option>
+              <option value="GLOWING Night 50ml">GLOWING Night 50ml</option>
+              <option value="Zahrat Hawaii 35ml">Zahrat Hawaii 35ml</option>
+              <option value="GOLDEN DREAMS 50ml">GOLDEN DREAMS 50ml</option>
+              <option value="Imperial Oud 50ml">Imperial Oud 50ml</option>
+              <option value="VANILLA COFFEE 35ml">Imperial Oud 50ml</option>
+            </select>
+          <select name="parfum2" required>
+              <option value="" disabled selected>Choisissez le Parfum 2</option>
+              <option value="FOR MEN 50ml">FOR MEN 50ml</option>
+              <option value="Royal Men 50ml">Royal Men 50ml</option>
+              <option value="RAYAN BLACK 50ml">RAYAN BLACK 50ml</option>
+              <option value="ALREHAB ELIXIR 35ml">ALREHAB ELIXIR 35ml</option>
+              <option value="GLOWING Night 50ml">GLOWING Night 50ml</option>
+              <option value="Zahrat Hawaii 35ml">Zahrat Hawaii 35ml</option>
+              <option value="GOLDEN DREAMS 50ml">GOLDEN DREAMS 50ml</option>
+              <option value="Imperial Oud 50ml">Imperial Oud 50ml</option>
+              <option value="VANILLA COFFEE 35ml">Imperial Oud 50ml</option>
+          </select>
+            </div>
+            <!-- Total -->
+            <div class="price price-total">
+              <strong>Total :</strong> 
+              <span class="new-price" id="totalPrice_form3">99DH</span>
+              <span class="old-price" id="oldPrice_form3">139DH</span>
+              <strong>(+livraison gratuite)</strong>
+            </div>
+            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
+            <input type="text" name="honeypot" style="display:none;">
+            <div class="form-loader" style="display: none; color: noir; margin: 10px 0; text-align: center; font-weight: bold;">
+              <span class="spinner-text">
+                Traitement en cours <span class="emoji-spinner">⏳</span>...
+              </span>
+            </div>
+
             <button type="submit">Confirmer la Commande</button>
           </form>
-        <div class="price">
-             <span class="old-price">199DH</span>
-             <span class="new-price">139DH</span>
-        </div>
         </div>
       </div>
 </section>
@@ -1253,108 +1507,365 @@ input[name="email"] {
     <section class="form-section descriptionn-ar" id="commande_form4" dir="rtl" lang="ar">
       <div class="form-wrapper">
         <div class="form-image">
-          <img id="mainImage_form4" src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" alt="المنتج الرئيسي">
+          <img id="mainImage_form4" src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" alt="المنتج الرئيسي">
           <div class="thumbnail-gallery-wrapper">
             <button class="thumb-scroll left" onclick="scrollThumbnails(-1, 'form4')">◀</button>
 
             <div class="gallery-thumbnails" id="thumbnails_form4">
-              <img src="photo/Eau_de_Parfum_For_Men_by_Al_Rehab_50ml_homme.webp" class="active" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_Royal_Men_by_Al_Rehab_50ml_homme.jpg" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_RAYAN_BLACK_by_Al_Rehab_50ml_homme.webp" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_Alrehab_Elixir_by_Al_Rehab_35ml_mixte.webp" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_Glowing_Night_by_Al_Rehab_50ml_femme.webp" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_Zahrat_Hawaii_by_Al_Rehab_35ml_femme.jpg" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_Golden_Dreams_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_Imperial_Oud_by_Al_Rehab_50ml_mixte.webp" onclick="changeImage(this, 'form4')">
-              <img src="photo/Eau_de_Parfum_VANILLA_COFFEE_by_Al_Rehab_35ml_mixte.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/FORMEN by ALREHAB HOMME 50ML CP.jpg" class="active" onclick="changeImage(this, 'form4')">
+              <img src="photo/ROYALMEN by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/RAYANBLACK by ALREHAB HOMME 50ML CP.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/ALREHAB ELIXIR by ALREHAB FEMMME 35ML CP.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/GLOWING NIGHT by ALREHAB FEMME 50ML CP.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/ZAHRAT HAWAII by ALREHAB FEMME 35ML CP.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/GOLDEN DREAMS by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/IMPERIAL OUD by ALREHAB MIXTE 50ML CP.jpg" onclick="changeImage(this, 'form4')">
+              <img src="photo/VANILLA COFFEE by ALREHAB MIXTE 35ML CP.jpg" onclick="changeImage(this, 'form4')">
             </div>
 
             <button class="thumb-scroll right" onclick="scrollThumbnails(1, 'form4')">▶</button>
           </div>
         </div>
-        <div class="form-content">
-          <h2 class="titredeforme">اطلب الآن</h2>
-          <form id="orderForm_form4">
-            <input type="text" name="prenom" placeholder="الاسم الأول" required maxlength="50" autocomplete="given-name" />
-            <input type="text" name="nom" placeholder="الاسم العائلي" required maxlength="50" autocomplete="family-name" />
-            <input type="text" name="adresse" placeholder="العنوان الكامل" required maxlength="100" autocomplete="off" />
-            <input type="email" name="email" placeholder="البريد الإلكتروني" disabled>
-            <input type="tel" name="telephone" placeholder="رقم الهاتف" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
-            <input type="number" name="quantite" placeholder="الكمية (مثلاً: 1)" min="1" required />
-            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
-		    <div class="form-loader" style="display: none; color: noir;  margin: 10px 0; text-align: center; font-weight: bold;">
-				 <span class="spinner-text">
-                          <span class="emoji-spinner">⏳</span> يرجى الانتظار...
-                 </span>
+        <div class="form-content" translate="no">
+                <h2 class="titredeforme" translate="no">اطلب الآن</h2>
+          <form id="orderForm_form4" dir="rtl" style="text-align: right;" style="user-select: none;">
+
+                <input type="text" name="prenom" placeholder="الاسم الشخصي" required maxlength="50" autocomplete="given-name" />
+        
+                  <input type="text" name="nom" placeholder="الاسم العائلي" required maxlength="50" autocomplete="family-name" />
+        
+                  <input type="text" name="adresse" placeholder="العنوان الكامل" required maxlength="100" autocomplete="off" />
+        
+                  <input type="email" name="email" placeholder="البريد الإلكتروني" disabled />
+        
+                  <input type="tel" name="telephone" placeholder="رقم الهاتف (مثال: 06)" required 
+                      pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
+        
+                  <input type="number" name="quantite" placeholder="الكمية (مثال: 1)" min="1" required />
+
+              <!-- اختيار الباقة -->
+              <div class="pack-choice">
+                <label><strong translate="no">اختر الباقة :</strong></label>
+                  <select name="pack" id="packChoice_form4">
+                      <option value="Pack 1 (2 parfums) - 99DH" data-type="Pack 1 (2 parfums) - 99DH" translate="no">الباقة 1 (عطران) - 99 درهم</option>
+                      <option value="Pack 2 (4 parfums) - 139DH" data-type="Pack 2 (4 parfums) - 139DH" translate="no">الباقة 2 (4 عطور) - 139 درهم</option>
+                      <option value="Pack 3 (6 parfums) - 189DH" data-type="Pack 3 (6 parfums) - 189DH" translate="no">الباقة 3 (6 عطور) - 189 درهم</option>
+                      <option value="Pack 4 (8 parfums) - 239DH" data-type="Pack 4 (8 parfums) - 239DH" translate="no">الباقة 4 (8 عطور) - 239 درهم</option>
+                </select>
+              </div>
+
+              <!-- اختيار العطور -->
+              <div id="parfumChoiceForm4" class="parfum-dynamic">
+              <label><strong>اختر العطرين :</strong></label><br>
+
+                <select name="parfum1" required>
+                    <option value="" disabled selected>اختر العطر الأول</option>
+                    <option value="FOR MEN 50ml">فور مين 50 مل</option>
+                    <option value="Royal Men 50ml">رويال مين 50 مل</option>
+                    <option value="RAYAN BLACK 50ml">ريان بلاك 50 مل</option>
+                    <option value="ALREHAB ELIXIR 35ml">الأريـحـاب إليكسير 35 مل</option>
+                    <option value="GLOWING Night 50ml">جلوينغ نايت 50 مل</option>
+                    <option value="Zahrat Hawaii 35ml">زهرة هاواي 35 مل</option>
+                    <option value="GOLDEN DREAMS 50ml">غولدن دريمز 50 مل</option>
+                    <option value="Imperial Oud 50ml">إمبيريال عود 50 مل</option>
+                    <option value="VANILLA COFFEE 35ml">"فانيلا كوفي 35 مل</option>
+                </select>
+
+                <select name="parfum2" required>
+                    <option value="" disabled selected>اختر العطر الثاني</option>
+                    <option value="FOR MEN 50ml">فور مين 50 مل</option>
+                    <option value="Royal Men 50ml">رويال مين 50 مل</option>
+                    <option value="RAYAN BLACK 50ml">ريان بلاك 50 مل</option>
+                    <option value="ALREHAB ELIXIR 35ml">الأريـحـاب إليكسير 35 مل</option>
+                    <option value="GLOWING Night 50ml">جلوينغ نايت 50 مل</option>
+                    <option value="Zahrat Hawaii 35ml">زهرة هاواي 35 مل</option>
+                    <option value="GOLDEN DREAMS 50ml">غولدن دريمز 50 مل</option>
+                    <option value="Imperial Oud 50ml">إمبيريال عود 50 مل</option>
+                    <option value="VANILLA COFFEE 35ml">"فانيلا كوفي 35 مل</option>
+              </select>
             </div>
-            <button type="submit">تأكيد الطلب</button>
-          </form>
-           <div class="price">
-                <span class="old-price">199MAD</span>
-               <span class="new-price">139MAD</span>
-          </div>
+
+              <!-- السعر -->
+              <div class="price price-total">
+                <strong>السعر :</strong>
+                  <span class="new-price" id="totalPrice_form4" translate="no">99 درهم</span>
+                  <span class="old-price" id="oldPrice_form4" translate="no">139 درهم</span>
+                  <strong translate="no">(+ التوصيل مجاني)</strong>
+              </div>
+
+              <!-- Honeypots -->
+                  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
+                  <input type="text" name="honeypot" style="display:none;" />
+
+              <!-- Loader -->
+              <div class="form-loader" style="display: none; color: black; margin: 10px 0; text-align: center; font-weight: bold;">
+              <span class="spinner-text" translate="no">جاري المعالجة <span class="emoji-spinner">⏳</span>...</span>
+              </div>
+
+              <button type="submit" translate="no">تأكيد الطلب</button>
+
+        </form>
         </div>
       </div>
     </section>
 <!-- Boutons fixes -->
 <button id="scrollTopBtn" title="Retour en haut">↑</button>
-<button id="commanderBtn" title="Commander" >Commander maintenant 🛒</button>
+<button id="commanderBtn" title="Commander" autocorrect="off" autocapitalize="off" spellcheck="false" >Commander maintenant 🛒</button>
 <!-- Formulaire flottant -->
-<div id="popupOverlay" >
+<div id="popupOverlay">
   <div id="popupForm">
-    <span id="closePopup">✖</span>
+    <span id="closePopup" autocorrect="off" autocapitalize="off" spellcheck="false">✖</span>
     <h2>Commander maintenant</h2>
-    <form id="popupOrderForm">
+
+    <form id="popupOrderForm" style="user-select: none;">
+
       <input type="text" name="prenom" placeholder="Prénom" required maxlength="50" autocomplete="given-name" />
       <input type="text" name="nom" placeholder="Nom" required maxlength="50" autocomplete="family-name" />
       <input type="text" name="adresse" placeholder="Adresse complète" required maxlength="100" autocomplete="off" />
-      <input type="email" name="email" placeholder="Email" disabled>
-      <input type="tel" name="telephone" placeholder="Numéro de téléphone" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
+      <input type="email" name="email" placeholder="Email" disabled />
+      <input type="tel" name="telephone" placeholder="Numéro de téléphone (ex: 06)" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
       <input type="number" name="quantite" placeholder="Quantité (ex: 1)" min="1" required />
-      
-      <!-- Champ honeypot invisible pour bots -->
+
+      <!-- Choix du pack -->
+      <div class="pack-choice">
+        <label><strong>Choisissez votre pack :</strong></label>
+        <select name="pack" id="packChoice_formpopupOrder">
+          <option value="Pack 1 (2 parfums) - 99DH">Pack 1 (2 parfums) - 99 DH</option>
+          <option value="Pack 2 (4 parfums) - 139DH">Pack 2 (4 parfums) - 139 DH</option>
+          <option value="Pack 3 (6 parfums) - 189DH">Pack 3 (6 parfums) - 189 DH</option>
+          <option value="Pack 4 (8 parfums) - 239DH">Pack 4 (8 parfums) - 239 DH</option>
+        </select>
+      </div>
+
+      <!-- Choix des parfums dynamiques -->
+      <div id="parfumChoiceFormpopupOrder" class="parfum-dynamic"></div>
+
+      <!-- Prix -->
+      <div class="price price-total">
+        <strong>Prix :</strong>
+        <span class="new-price" id="totalPrice_formpopupOrder">99 DH</span>
+        <span class="old-price" id="oldPrice_formpopupOrder">139 DH</span>
+        <strong>(+livraison gratuite)</strong>
+      </div>
+
+      <!-- Honeypots pour bots -->
       <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
-      		    <div class="form-loader" style="display: none; color: noir;  margin: 10px 0; text-align: center; font-weight: bold;">
-				 <span class="spinner-text">
-                          <span class="emoji-spinner">⏳</span> يرجى الانتظار...
-                 </span>
-            </div>
-      <button type="submit">Commander maintenant!</button>
+      <input type="text" name="honeypot" style="display:none;" />
+
+      <!-- Loader -->
+      <div class="form-loader" style="display: none; color: black; margin: 10px 0; text-align: center; font-weight: bold;">
+        <span class="spinner-text">Traitement en cours <span class="emoji-spinner">⏳</span>...</span>
+      </div>
+
+      <button type="submit" autocorrect="off" autocapitalize="off" spellcheck="false">Commander maintenant !</button>
+
     </form>
-        <div class="price">
-             <span class="old-price">199MAD</span>
-             <span class="new-price">139MAD</span>
-        </div>
   </div>
 </div>
-<button id="commanderBtn2" title="Commander2">اطلب الآن 🛒</button>
 
-<div id="popupOverlay2">
+<button id="commanderBtn2" title="Commander2" translate="no">اطلب الآن 🛒</button>
+
+<div id="popupOverlay2" translate="no">
   <div id="popupForm2">
     <span id="closePopup2">✖</span>
-    <h2>اطلب الآن</h2>
-    <form id="popupOrderForm2">
-      <input type="text" name="prenom" placeholder="الاسم الأول" required maxlength="50" autocomplete="given-name" />
-      <input type="text" name="nom" placeholder="الكنية" required maxlength="50" autocomplete="family-name" />
-      <input type="text" name="adresse" placeholder="العنوان الكامل" required maxlength="100" autocomplete="off" />
-      <input type="email" name="email" placeholder="البريد الإلكتروني" disabled>
-      <input type="tel" name="telephone" placeholder="رقم الهاتف" required pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />
-      <input type="number" name="quantite" placeholder="الكمية (مثلاً: 1)" min="1" required />
-      
+    <h2 autocorrect="off" autocapitalize="off" spellcheck="false" translate="no">اطلب الآن</h2>
+
+    <form id="popupOrderForm2" translate="no" style="user-select: none;">
+
+      <input type="text" name="prenom" placeholder="الاسم الشخصي" required maxlength="50" autocomplete="given-name" /> 
+      <input type="text" name="nom" placeholder="الاسم العائلي" required maxlength="50" autocomplete="family-name" />    
+      <input type="text" name="adresse" placeholder="العنوان الكامل" required maxlength="100" autocomplete="off" />     
+      <input type="email" name="email" placeholder="البريد الإلكتروني" disabled />      
+      <input type="tel" name="telephone" placeholder="رقم الهاتف (مثال: 06)" required 
+             pattern="[0-9+\s()-]{6,20}" maxlength="20" autocomplete="tel" />      
+      <input type="number" name="quantite" placeholder="الكمية (مثال: 1)" min="1" required />
+
+      <!-- اختيار الباقة -->
+      <div class="pack-choice">
+        <label><strong>اختر الباقة :</strong></label>
+        <select name="pack" id="packChoice_formpopupOrder2">
+          <option value="Pack 1 (2 parfums) - 99DH" translate="no">الباقة 1 (عطران) - 99 درهم</option>
+          <option value="Pack 2 (4 parfums) - 139DH" translate="no">الباقة 2 (4 عطور) - 139 درهم</option>
+          <option value="Pack 3 (6 parfums) - 189DH" translate="no">الباقة 3 (6 عطور) - 189 درهم</option>
+          <option value="Pack 4 (8 parfums) - 239DH" translate="no">الباقة 4 (8 عطور) - 239 درهم</option>
+        </select>
+      </div>
+
+      <!-- اختيار العطور -->
+      <div id="parfumChoiceFormpopupOrder2" class="parfum-dynamic"></div>
+
+      <!-- السعر -->
+      <div class="price price-total">
+        <strong>السعر :</strong>
+        <span class="new-price" id="totalPrice_formpopupOrder2" translate="no">99 درهم</span>
+        <span class="old-price" id="oldPrice_formpopupOrder2" translate="no">139 درهم</span>
+        <strong translate="no">(+ التوصيل مجاني)</strong>
+      </div>
+
+      <!-- Honeypots -->
       <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
-      		    <div class="form-loader" style="display: none; color: noir;  margin: 10px 0; text-align: center; font-weight: bold;">
-				 <span class="spinner-text">
-                          <span class="emoji-spinner">⏳</span> يرجى الانتظار...
-                 </span>
-            </div>
-      <button type="submit">!تأكيد الطلب</button>
+      <input type="text" name="honeypot" style="display:none;" />
+
+      <!-- Loader -->
+      <div class="form-loader" style="display: none; color: black; margin: 10px 0; text-align: center; font-weight: bold;">
+        <span class="spinner-text" translate="no">جاري المعالجة <span class="emoji-spinner">⏳</span>...</span>
+      </div>
+
+      <button type="submit" autocorrect="off" autocapitalize="off" spellcheck="false" translate="no">تأكيد الطلب</button>
+
     </form>
-        <div class="price">
-             <span class="old-price">199DH</span>
-             <span class="new-price">139DH</span>
-        </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  /* ----------------------------------------------------
+     🟦 LISTES DES PARFUMS (FR & AR)
+  ---------------------------------------------------- */
+  const parfumsFR = [
+    "FOR MEN 50ml",
+    "Royal Men 50ml",
+    "RAYAN BLACK 50ml",
+    "ALREHAB ELIXIR 35ml",
+    "GLOWING Night 50ml",
+    "Zahrat Hawaii 35ml",
+    "GOLDEN DREAMS 50ml",
+    "Imperial Oud 50ml",
+    "VANILLA COFFEE 35ml"
+    
+  ];
+
+  const parfumsAR = [
+    "فور مين 50 مل",
+    "رويال مين 50 مل",
+    "ريان بلاك 50 مل",
+    "الأريـحـاب إليكسير 35 مل",
+    "جلوينغ نايت 50 مل",
+    "زهرة هاواي 35 مل",
+    "غولدن دريمز 50 مل",
+    "إمبيريال عود 50 مل",
+    "فانيلا كوفي 35 مل"
+  ];
+
+  /* ----------------------------------------------------
+     🟩 FONCTIONS : Détection langue selon ID de formulaire
+  ---------------------------------------------------- */
+  function isArabic(formId) {
+    return ['2', '4', 'popupOrder2'].includes(formId);
+  }
+
+  /* ----------------------------------------------------
+     🎨 Générer les <option> selon la langue
+  ---------------------------------------------------- */
+  function generateParfumSelect(formId) {
+    const list = isArabic(formId) ? parfumsAR : parfumsFR;
+    return list.map(p => `<option value="${p}">${p}</option>`).join('');
+  }
+
+  /* ----------------------------------------------------
+     🏷️ Labels multilingues
+  ---------------------------------------------------- */
+  function labelPack(count, formId) {
+    return isArabic(formId)
+      ? `اختر ${count} عطورا :`
+      : `Choisissez vos ${count} parfums :`;
+  }
+
+  function optionLabel(n, formId) {
+    return isArabic(formId)
+      ? `اختر العطر ${n}`
+      : `Choisissez le Parfum ${n}`;
+  }
+
+  /* ----------------------------------------------------
+     🔄 GÉNÉRATION DYNAMIQUE DES CHOIX DE PARFUMS
+  ---------------------------------------------------- */
+  function updateParfumChoices(packChoice, formId) {
+
+    const parfumForm = document.getElementById(`parfumChoiceForm${formId}`);
+    if (!parfumForm) return;
+
+    parfumForm.style.display = "block";
+
+    // Déterminer nombre de parfums selon pack
+    let count = 2;
+    if (packChoice.includes('(4')) count = 4;
+    if (packChoice.includes('(6')) count = 6;
+    if (packChoice.includes('(8')) count = 8;
+
+    let html = `<label><strong>${labelPack(count, formId)}</strong></label><br>`;
+
+    for (let i = 1; i <= count; i++) {
+      html += `
+        <select name="parfum${i}" required translate="no">
+          <option value="" disabled selected>${optionLabel(i, formId)}</option>
+          ${generateParfumSelect(formId)}
+        </select>
+      `;
+    }
+
+    parfumForm.innerHTML = html;
+    updateTotalPrice(packChoice, formId);
+  }
+
+  /* ----------------------------------------------------
+     💰 MISE À JOUR DES PRIX
+  ---------------------------------------------------- */
+  function updateTotalPrice(packChoice, formId) {
+
+    const newPrice = document.getElementById(`totalPrice_form${formId}`);
+    const oldPrice = document.getElementById(`oldPrice_form${formId}`);
+
+    if (!newPrice || !oldPrice) return;
+
+    let prixPromo = 99, prixOld = 139;
+
+    if (packChoice.includes('(4')) { prixPromo = 139; prixOld = 189; }
+    if (packChoice.includes('(6')) { prixPromo = 189; prixOld = 239; }
+    if (packChoice.includes('(8')) { prixPromo = 239; prixOld = 289; }
+
+    const dh = isArabic(formId) ? " درهم" : "DH";
+
+    newPrice.textContent = `${prixPromo}${dh}`;
+    oldPrice.textContent = `${prixOld}${dh}`;
+  }
+
+  /* ----------------------------------------------------
+     🎯 FORMULAIRES SUPPORTÉS : ID LIST
+  ---------------------------------------------------- */
+
+  const formList = [
+    "1", "2", "3", "4", 
+    "popupOrder", 
+    "popupOrder2"
+  ];
+
+  /* ----------------------------------------------------
+     🔗 CONNECTER LES SELECT PACK AUX FONCTIONS
+  ---------------------------------------------------- */
+  formList.forEach(id => {
+    const select = document.getElementById(`packChoice_form${id}`);
+    if (select) {
+      select.addEventListener('change', e => updateParfumChoices(e.target.value, id));
+    }
+  });
+
+  /* ----------------------------------------------------
+     ⭐ INITIALISATION PACK PAR DÉFAUT (Pack 1)
+  ---------------------------------------------------- */
+  updateParfumChoices('Pack 1 (2 parfums) - 99DH', '1');           
+  updateParfumChoices('Pack 1 (2 parfums) - 99DH', '2');           
+  updateParfumChoices('Pack 1 (2 parfums) - 99DH', '3');           
+  updateParfumChoices('Pack 1 (2 parfums) - 99DH', '4');           
+
+  updateParfumChoices('Pack 1 (2 parfums) - 99DH', 'popupOrder'); 
+  updateParfumChoices('Pack 1 (2 parfums) - 99DH', 'popupOrder2'); 
+
+});
+</script>
+
+
 
 <script>
     const scrollTopBtn = document.getElementById("scrollTopBtn");
@@ -1375,166 +1886,173 @@ input[name="email"] {
         behavior: "smooth"
       });
     });
-  </script>
+</script>
+
 <script>
-        // Initialisation de l'URL du script GAS (Constante PHP remplacée par la valeur)
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbw_V41IrpSbLfU6-pcXnNZpLi8m3MRjsXKszKQM77JqxKp31kM46U3tolh2TnDd0Wu5/exec';
+/* ============================================================
+   🟦 CONFIGURATION
+   ============================================================ */
+const scriptURL = "https://script.google.com/macros/s/AKfycbxYaiqJxYAFbJy10p-lhlLGfPcAVep1NzuJw6TgZ6IENBuW96rrmPrtEGk-iFD2Hdsz/exec";
 
-// Fonction pour changer l'image principale
+/* ============================================================
+   🟦 CHANGEMENT D’IMAGE
+   ============================================================ */
 function changeImage(el, form_id) {
-    const main = document.getElementById('mainImage_' + form_id); // Sélectionne l'image principale du formulaire avec l'ID dynamique
-    main.src = el.src; // Change l'image principale en fonction de la miniature cliquée
-    
-    // Retirer la classe 'active' de toutes les miniatures du formulaire avec l'ID dynamique
-    document.querySelectorAll('#thumbnails_' + form_id + ' img').forEach(img => {
-        img.classList.remove('active');
+    const main = document.getElementById("mainImage_" + form_id);
+    main.src = el.src;
+
+    document.querySelectorAll("#thumbnails_" + form_id + " img").forEach(img => {
+        img.classList.remove("active");
     });
-    
-    // Ajouter la classe 'active' à l'image cliquée
-    el.classList.add('active');
+
+    el.classList.add("active");
 }
 
-// Fonction pour faire défiler les miniatures
 function scrollThumbnails(direction, form_id) {
-    const container = document.getElementById("thumbnails_" + form_id); // Sélectionne le conteneur des miniatures pour ce formulaire
-    const scrollAmount = 150; // Définir la quantité de défilement
-    container.scrollBy({
-        left: direction * scrollAmount, // Direction et distance de défilement
-        behavior: "smooth" // Effet de défilement fluide
-    });
+    const container = document.getElementById("thumbnails_" + form_id);
+    container.scrollBy({ left: direction * 150, behavior: "smooth" });
 }
 
-// Aller à la section du formulaire (id="commande")
-document.getElementById("commanderBtn").addEventListener("click", () => {
-  const section = document.getElementById("commande");
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
-  }
+/* ============================================================
+   🟦 POPUPS FORMULAIRES
+   ============================================================ */
+document.getElementById("commanderBtn")?.addEventListener("click", () => {
+    document.getElementById("popupOverlay").style.display = "flex";
 });
-        // --- Gestion du Formulaire Principal (avec 'commanderBtn' et Formulaire fixe) ---
-        document.getElementById("commanderBtn").addEventListener("click", () => {
-            // Afficher le pop-up
-            document.getElementById("popupOverlay").style.display = "flex";
-            // OU: Faire défiler vers le formulaire principal
-            /*
-            const section = document.getElementById("commande");
-            if (section) {
-                section.scrollIntoView({ behavior: "smooth" });
-            }
-            */
-        });
-
-        // Fermer le popup
-        document.getElementById("closePopup").addEventListener("click", () => {
-            document.getElementById("popupOverlay").style.display = "none";
-        });
-
-document.getElementById("commanderBtn2").addEventListener("click", () => {
-  const section = document.getElementById("commande2");
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
-  }
+document.getElementById("closePopup")?.addEventListener("click", () => {
+    document.getElementById("popupOverlay").style.display = "none";
 });
-        // --- Gestion du Formulaire Principal (avec 'commanderBtn' et Formulaire fixe) ---
-        document.getElementById("commanderBtn2").addEventListener("click", () => {
-            // Afficher le pop-up
-            document.getElementById("popupOverlay2").style.display = "flex";
-            // OU: Faire défiler vers le formulaire principal
-            /*
-            const section = document.getElementById("commande");
-            if (section) {
-                section.scrollIntoView({ behavior: "smooth" });
-            }
-            */
-        });
+document.getElementById("commanderBtn2")?.addEventListener("click", () => {
+    document.getElementById("popupOverlay2").style.display = "flex";
+});
+document.getElementById("closePopup2")?.addEventListener("click", () => {
+    document.getElementById("popupOverlay2").style.display = "none";
+});
 
-        // Fermer le popup
-        document.getElementById("closePopup2").addEventListener("click", () => {
-            document.getElementById("popupOverlay2").style.display = "none";
-        });
-
+/* ============================================================
+   🟦 VALIDATION + SOUMISSION FORMULAIRE
+   ============================================================ */
 function submitForm(formId) {
     const form = document.getElementById(formId);
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        const formData = new FormData(form);
+    if (!form) return;
 
-        // Ajout d'un paramètre 'Langue'
-        const lang = document.documentElement.getAttribute('dir') === 'rtl' ? 'Arabe' : 'Français';
-        formData.append('Langue', lang);
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-        // Honeypot anti-bot
-        if (formData.get('website')) {
-            console.log('Bot detected');
-            alert("Erreur de soumission (Bot détecté)");
+        const prenom = form.querySelector('input[name="prenom"]');
+        const nom = form.querySelector('input[name="nom"]');
+        const adresse = form.querySelector('input[name="adresse"]');
+        const telephone = form.querySelector('input[name="telephone"]');
+        const quantite = form.querySelector('input[name="quantite"]');
+        const honeypot = form.querySelector('input[name="honeypot"]');
+        const fakeWebsite = form.querySelector('input[name="website"]');
+
+        /* 🔍 VALIDATION STRICTE */
+        const strictPattern = /^[\p{L}0-9 ,\-]+$/u;
+
+        if (!prenom.value || !strictPattern.test(prenom.value)) {
+            alert("❌ Prénom invalide.");
+            return;
+        }
+        if (!nom.value || !strictPattern.test(nom.value)) {
+            alert("❌ Nom invalide.");
+            return;
+        }
+        if (!adresse.value || !strictPattern.test(adresse.value)) {
+            alert("❌ Adresse invalide.");
             return;
         }
 
-        // 🔄 Afficher le loader
-        const loader = form.querySelector('.form-loader');
-        if (loader) loader.style.display = 'block';
+        if (!telephone.value || !quantite.value) {
+            alert("Tous les champs doivent être remplis.");
+            return;
+        }
 
-        fetch(scriptURL, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            // ✅ Masquer le loader    if (loader) loader.style.display = 'none';
+        const phonePattern = /^[0-9+\s()-]{6,20}$/;
+        if (!phonePattern.test(telephone.value)) {
+            alert("Numéro de téléphone invalide.");
+            return;
+        }
 
-    if (formId === 'popupOrderForm') {
-        document.getElementById("popupOverlay").style.display = "none";
-    }
-    if (formId === 'popupOrderForm2') {
-        document.getElementById("popupOverlay2").style.display = "none";
-    }
-    // ✅ Afficher une alerte de succès
-    if (document.documentElement.getAttribute('dir') === 'rtl') {
-        alert("✅ تم إرسال الطلب بنجاح!");
-    } else {
-        alert("✅ Commande envoyée avec succès !");
-    }
+        if (quantite.value < 1 || isNaN(quantite.value)) {
+            alert("Quantité invalide.");
+            return;
+        }
 
-    // ✅ Rediriger après que l'utilisateur clique sur "OK"
-    window.location.href = window.location.href;
-            form.reset();
+        if (honeypot.value || fakeWebsite.value) {
+            alert("Soumission suspecte détectée.");
+            return;
+        }
 
-            if (formId === 'popupOrderForm') {
-                document.getElementById("popupOverlay").style.display = "none";
-            }
-            if (formId === 'popupOrderForm2') {
-                document.getElementById("popupOverlay2").style.display = "none";
-            }
-        })
-        .catch(error => {
-            // ❌ Masquer le loader en cas d'erreur
-            if (loader) loader.style.display = 'none';
+        /* 📤 ENVOI */
+        const formData = new FormData(form);
+        const lang = document.documentElement.getAttribute("dir") === "rtl" ? "Arabe" : "Français";
+        formData.append("Langue", lang);
 
-            alert("❌ Une erreur est survenue. Veuillez réessayer.");
-            console.error("Erreur :", error);
-        });
+        const loader = form.querySelector(".form-loader");
+        if (loader) {
+            loader.style.display = "block";
+            loader.classList.add("loading"); // 🔥 clignotement activé
+        }
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(() => {
+                if (loader) {
+                    loader.style.display = "none";
+                    loader.classList.remove("loading");
+                }
+
+                if (formId === "popupOrderForm") {
+                    document.getElementById("popupOverlay").style.display = "none";
+                }
+                if (formId === "popupOrderForm2") {
+                    document.getElementById("popupOverlay2").style.display = "none";
+                }
+
+                alert(document.documentElement.getAttribute("dir") === "rtl"
+                    ? "✅ تم إرسال الطلب بنجاح!"
+                    : "✅ Commande envoyée avec succès !"
+                );
+
+                form.reset();
+                window.location.reload();
+            })
+            .catch(err => {
+                if (loader) {
+                    loader.style.display = "none";
+                    loader.classList.remove("loading");
+                }
+
+                alert("❌ Une erreur est survenue. Veuillez réessayer.");
+                console.error("Erreur:", err);
+            });
     });
 }
 
+/* ============================================================
+   🟦 ACTIVATION DES FORMULAIRES
+   ============================================================ */
+submitForm("orderForm_form1");
+submitForm("orderForm_form2");
+submitForm("orderForm_form3");
+submitForm("orderForm_form4");
+submitForm("popupOrderForm");
+submitForm("popupOrderForm2");
+</script>
 
-        // Appel des gestionnaires de soumission pour les deux formulaires
-        submitForm('orderForm_form1'); // Formulaire principal
-        submitForm('orderForm_form2'); // Formulaire principal
-        submitForm('orderForm_form3'); // Formulaire principal
-        submitForm('orderForm_form4'); // Formulaire principal
-        submitForm('popupOrderForm'); // Formulaire popup
-        submitForm('popupOrderForm2'); // Formulaire popup
-    </script>
 
-    <script type="text/javascript">
+
+
+<script type="text/javascript">
       function googleTranslateElementInit() {
         new google.translate.TranslateElement(
           { pageLanguage: "en" },
           "google_translate_element"
         );
       }
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</script>
 
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script>
   function setDefaultLanguageToArabic() {
@@ -1554,9 +2072,7 @@ function submitForm(formId) {
   });
 </script>
 
-
-
-   <script>
+<script>
   function isRTLLanguage(lang) {
     // Liste des langues RTL courantes
     const rtlLangs = ['ar', 'fa', 'he', 'ur', 'ps'];
@@ -1592,6 +2108,7 @@ function submitForm(formId) {
     setTimeout(observeLanguageChange, 2200); // Donne le temps à Google de charger
   });
 </script>
+
 <script>
   function updateDescriptionByLang(lang) {
     // Cacher toutes les descriptions
